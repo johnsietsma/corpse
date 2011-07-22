@@ -25,7 +25,8 @@ DATABASES = {
 }
 
 
-URL_RE_ROOT = '(?i)%s' % APP_FOLDER
+#URL_RE_ROOT = '(?i)%s' % APP_FOLDER
+URL_RE_ROOT = ''
 
 TIME_ZONE = 'Australia/Melbourne'
 LANGUAGE_CODE = 'en-us'
@@ -36,8 +37,8 @@ USE_L10N = False
 MEDIA_ROOT = '%s/media' % APP_PATH
 MEDIA_URL = '%s/media/' % HTTP_ROOT
 STATIC_ROOT = '%s/static/' % APP_PATH
-STATIC_URL = '%s/static/' % HTTP_ROOT
-ADMIN_MEDIA_PREFIX = '%s/admin/' % HTTP_ROOT
+STATIC_URL = '%sstatic/' % HTTP_ROOT
+ADMIN_MEDIA_PREFIX = '%smedia/' % HTTP_ROOT
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -87,8 +88,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
+    'corpseflipper',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
