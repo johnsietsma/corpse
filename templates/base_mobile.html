@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Gnome Roam - {% block title %} Home {% endblock %}</title>
+
+<!-- Meta Tags -->
+<meta http-equiv="content-type"
+	content="application/xhtml+xml; charset=utf-8" />
+<meta name="robots" content="index, follow" />
+<meta name="description"
+	content="Jewel Collector. A Layar game built by John Sietsma." />
+<meta name="keywords"
+	content="Layar, AR, Augmented Reality, John Sietsma" />
+<meta name="author" content="John Sietsma" />
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="" />
+
+<!-- CSS -->
+<link rel="stylesheet" href="{{media_url}}css/mobile_styles.css"
+	media="all" type="text/css" />
+
+{% block extra_head %} {% endblock%}
+
+</head>
+
+<body>
+<div id="header">
+<div id="logo"><img src='{{media_url}}imgs/logo.png' /></div>
+Gnome Roam - Alpha
+</p>
+</div>
+<!-- header -->
+
+<div id="container">
+<div id="primaryContent">
+<div id="error">{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}</div>
+
+
+{% block content %} {% endblock %}</div>
+<!-- /primaryContent --> <br class="clear" />
+
+<div id="footer">Feedback!<br />
+{% if mobile %}<a href="{{ game_url }}">Return to game</a>{% endif %}</div>
+<!-- /footer --></div>
+<!-- container -->
+
+</body>
+</html>
