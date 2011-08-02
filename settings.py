@@ -35,7 +35,7 @@ USE_I18N = False
 USE_L10N = False
 
 MEDIA_ROOT = '%s/media' % APP_PATH
-MEDIA_URL = '%s/media/' % HTTP_ROOT
+MEDIA_URL = '%ssite_media/' % HTTP_ROOT
 STATIC_ROOT = '%s/static/' % APP_PATH
 STATIC_URL = '%sstatic/' % HTTP_ROOT
 ADMIN_MEDIA_PREFIX = '%smedia/' % HTTP_ROOT

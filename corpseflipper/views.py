@@ -1,12 +1,54 @@
-from django.views.generic.simple import direct_to_template
+from django.views.generic.simple import direct_to_template, redirect_to
 from models import Corpse
 
+def random_torso(head_torso_link):
+	corpses = Corpse.objects.filter(head_torso_link=head_torso_link)
+	return random_or_default( corpses, Corpse.default_torso )
+
+def random_legs(torso_legs_link):
+	corpses = Corpse.objects.filter(torso_legs_link=torso_legs_link)
+	return random_or_default( corpses, Corpse.default_legs )
+
+def random_feet(legs_feet_link):
+	corpses = Corpse.objects.filter(legs_feet_link=legs_feet_link)
+	return random_or_default( corpses, Corpse.default_feet )
+
+
+def random_or_default( corpses, default):
+	if corpses.count() > 0:
+		c = corpses.order_by('?')[0].url
+	else:
+		c = Corpse.default_head
+	return c
+
+
 def random(request):
-	c = Corpse.objects.order_by('?')[0]
-	extra = { 
-		'head': c.head,
-		'torso': c.torso,
-		'legs': c.legs, 
-		'feet': c.feet
-	}
+	if Corpse.objects.count() > 0:
+		c = Corpse.objects.order_by('?')[0]
+		head = c.head
+		torso = random_torso(head.head_torso_link)
+		legs = random_legs(torso.torso_legs_link)
+		feet = random_torso(legs.legs_feet_link)
+		extra = { 
+			'head': head.url,
+			'torso': torso.url,
+			'legs': legs.url, 
+			'feet': feet.url
+		}
+	else:
+		extra = {
+			'head': Corpse.default_head,
+			'torso': Corpse.default_torso,
+			'legs': Corpse.default_legs,
+			'feet': Corpse.default_feet
+		}
 	return direct_to_template(request, 'corpseflipper/random.html', extra)
+
+def random_head(request, link_type):
+	corpses = Corpse.objects.filter(head_torso_link=link_type)
+	if corpses.count() > 0:
+		c = corpses.order_by('?')[0].url
+	else:
+		c = Corpse.default_head
+
+	return redirect_to(request, url=c)
