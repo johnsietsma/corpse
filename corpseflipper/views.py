@@ -1,5 +1,7 @@
 from django.views.generic.simple import direct_to_template, redirect_to
-from models import Corpse
+from django.views.decorators.csrf import csrf_exempt
+
+from models import Corpse, CorpseForm
 
 def random_torso(head_torso_link):
 	corpses = Corpse.objects.filter(head_torso_link=head_torso_link)
@@ -52,3 +54,17 @@ def random_head(request, link_type):
 		c = Corpse.default_head
 
 	return redirect_to(request, url=c)
+
+@csrf_exempt
+def create(request):
+    if request.method == 'POST':
+        form = CorpseForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = CorpseForm()
+        
+    extra = { 
+             'corpse': form, 
+             }        
+    return direct_to_template(request, 'corpseflipper/corpse.html', extra)

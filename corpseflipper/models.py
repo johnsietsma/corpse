@@ -1,4 +1,6 @@
 from django.db import models
+from django.forms import ModelForm
+
 from settings import MEDIA_URL
 
 class Corpse(models.Model):
@@ -11,8 +13,8 @@ class Corpse(models.Model):
 	feet = models.ImageField(upload_to='corpse_images/feet')
 	
 	head_torso_link = models.CharField(max_length='10')
-	torso__legs_link = models.CharField(max_length='10')
-	legs_torso_feet = models.CharField(max_length='10')
+	torso_legs_link = models.CharField(max_length='10')
+	legs_feet_link = models.CharField(max_length='10')
 	
 	default_head = '%s%s' % (MEDIA_URL,'corpse_images/heads/default.jpg')
 	default_torso = '%s%s' % (MEDIA_URL,'corpse_images/torsos/default.jpg')
@@ -21,3 +23,7 @@ class Corpse(models.Model):
 	
 	def __unicode__(self):
 		return self.name  
+
+class CorpseForm(ModelForm):
+    class Meta:
+        model = Corpse
