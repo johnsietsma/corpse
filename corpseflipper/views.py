@@ -36,7 +36,7 @@ def random(request):
 
 		if c:
 			legs = c.legs.url
-			c = random_torso(c.legs_feet_link)
+			c = random_feet(c.legs_feet_link)
 			
 		if c:
 			feet = c.feet.url
