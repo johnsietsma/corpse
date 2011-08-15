@@ -7,17 +7,39 @@ import urllib2
 
 import Image
 
-from image_splitter import crop
+from image_splitter import split
+
+left_margin = 450
+resize_width = 350
+
+
+#url = 'http://corpse.tallgames.net/create/'
+url = 'http://localhost:8000/create/'
 
 # Register the streaming http handlers with urllib2
 register_openers()
 
-if __name__=='__main__':
-	filename = sys.argv[1]
+def upload_image(filename):
 	print 'Splitting',filename
 	
 	im = Image.open(filename)
-	head,torso,legs,feet = crop(im,4)
+	
+	#-----------------------
+	# chop off the edge of the holder
+	imgwidth, imgheight = im.size
+	box = (left_margin, 0, imgwidth, imgheight)
+	im = im.crop(box)
+	
+	#-----------------------
+	# resize
+	ratio = resize_width/float(im.size[0])	
+	size = (resize_width,int(im.size[1]*ratio))
+	print "Size",size,"ratio:",ratio
+	im = im.resize(size)
+	
+	#-----------------------
+	# Split the image
+	head,torso,legs,feet = split(im,4)
 	
 	head.save('head.png')
 	torso.save('torso.png')
@@ -42,5 +64,9 @@ if __name__=='__main__':
 	
 	datagen, headers = multipart_encode(form_data)
 	
-	request = urllib2.Request("http://localhost:8000/create/", datagen, headers)
+	request = urllib2.Request(url, datagen, headers)
 	print urllib2.urlopen(request).read()
+
+if __name__=='__main__':
+	filename = sys.argv[1]
+	upload_image(filename)	

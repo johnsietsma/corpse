@@ -1,7 +1,7 @@
 import Image
 import os
 
-def crop(im,pieces):
+def split(im,pieces):
     imgwidth, imgheight = im.size
     height = imgheight//pieces
     for i in range(pieces):
