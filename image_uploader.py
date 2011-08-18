@@ -9,7 +9,7 @@ import Image
 
 from image_splitter import split
 
-left_margin = 450
+left_margin = 360
 resize_width = 350
 
 

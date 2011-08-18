@@ -10,10 +10,9 @@ def split(im,pieces):
 
 if __name__=='__main__':
     infile='default.jpg'
-    height=100
     pieces = 4
     
     im = Image.open(infile)
-    for k,piece in enumerate(crop(im,pieces),0):
+    for k,piece in enumerate(split(im,pieces),0):
         path="tmp/IMG-%s.png" % k
         piece.save(path)
